@@ -12,7 +12,7 @@ int CCrypteur::EcrireMessage(char* buffer_original)
 	unsigned int TailleData = TailleData_original + 6; //Ajoute le message (MSG-) et un EOT à la fin
 	char* buffer = new char[TailleData];
 
-	sprintf_s(buffer, TailleData, "MSG-%s%c\0", buffer_original, 0x04);
+	sprintf_s(buffer, TailleData, "MSG-%s%c\0", buffer_original, 0x40);
 
 	unsigned int TailleDataX8 = TailleData * 8;
 
@@ -129,8 +129,12 @@ int CCrypteur::EcrireMessage(char* buffer_original)
 			cData[i] = OctetDestination[i].c;
 		}
 
+		char nomfichier[50];
+		cout << " données encodées " << endl;
 
-		CreerBMP((char*)"test_abcd.bmp");
+		cout << "donnez un nom de fichier et une destination ( avec le.bmp a la fin) ";
+		cin >> nomfichier;
+		CreerBMP(nomfichier);
 	}
 	return 0;
 }
@@ -202,6 +206,7 @@ int CCrypteur::LireMessage()
 				break;
 			}
 
+
 			j++;
 			if (j == 8)
 			{
@@ -221,6 +226,7 @@ int CCrypteur::LireMessage()
 		}
 		else
 		{
+			cout << "décodage en cours.." << endl;
 			k = 0;
 			i = 0;
 			j = 0;
@@ -254,11 +260,12 @@ int CCrypteur::LireMessage()
 					break;
 				}
 
+
 				j++;
 				if (j == 8)
 				{
 					j = 0;
-					if (OctetMessage[k].c == 0x04)
+					if (OctetMessage[k].c == 0x40)
 					{
 						flagEOT = true;
 						MessageEncode[k] = '\0';
@@ -272,7 +279,7 @@ int CCrypteur::LireMessage()
 				i++;
 			}
 
-			printf_s(MessageEncode);
+			cout << MessageEncode;
 
 
 
@@ -361,14 +368,12 @@ return 0;
 
  int CCrypteur::CreerBMP(char* nom)
  {
-	 char chemin[50] = "e:\\Cours_Annee_5\\";
 
 	 int i = 0;
 	 int ouverture = 0;
-	 strcat_s(chemin, nom);
 	 FILE* fichierSortie2;
 
-	 ouverture = fopen_s(&fichierSortie2, chemin, "w+ b");
+	 ouverture = fopen_s(&fichierSortie2, nom, "w+ b");
 
 	 fwrite(reconst.cN_M, 2, 1, fichierSortie2);
 	 fwrite(reconst.cPoid, 4, 1, fichierSortie2);
