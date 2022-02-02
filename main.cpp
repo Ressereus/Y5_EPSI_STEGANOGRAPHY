@@ -16,24 +16,25 @@ using namespace std;
 int main()
 {
 
-	char cfichier[] = "e:\\Cours_Annee_5\\TEST.bmp";
-	char cfichier2[] = "TEST2.bmp";
-	char data[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char cfichier[] = "e:\\Cours_Annee_5\\TEST2.bmp";
+	char cfichier2[] = "e:\\Cours_Annee_5\\turbine.bmp";
+	//char data[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	CCrypteur LeCrypteur(cfichier);
+	CCrypteur Image2(cfichier2);
 	if (LeCrypteur.valide = false)
 	{
-		printf("ce n'est pas un fichier BMP");
+		
 		return -1;
 	}
-	if (LeCrypteur.reconst.bitspPixels != 24)
+	if (Image2.valide = false)
 	{
-		printf("pas 24bits");
-		return -2;
+
+		return -1;
 	}
 
-
-	LeCrypteur.EcrireMessage(data);
+	//LeCrypteur.EcrireMessage(data);
+	//LeCrypteur.LireMessage();
 	//LeCrypteur.CreerBMP(cfichier2);
-
-	return 0;
+	LeCrypteur.EncoderImage(&Image2);
+return 0;
 }

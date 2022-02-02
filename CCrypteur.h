@@ -14,6 +14,28 @@ struct pixel_s
 
 };
 
+struct bits_s
+{
+	
+	unsigned short int b0 : 1;// le LSB
+	unsigned short int b1 : 1;
+	unsigned short int b2 : 1;
+	unsigned short int b3 : 1;
+	unsigned short int b4 : 1;
+	unsigned short int b5 : 1;
+	unsigned short int b6 : 1;
+	unsigned short int b7 : 1;
+
+	
+};
+
+typedef union
+{
+	bits_s Octet;
+	unsigned char c;
+
+}UnionOctet;
+
 struct fichier_s
 {
 	char leChemin[100];
@@ -38,6 +60,8 @@ struct fichier_s
 	unsigned char cMasqueA[5];
 	unsigned char cRGB[5];
 	unsigned char cUnused[65];
+
+	unsigned char Entete[139];
 	unsigned int restant;
 	unsigned int tailleDuBMP;
 	unsigned int chargeUtileMSG;
@@ -57,14 +81,16 @@ class CCrypteur
 public:
 
 	int EcrireMessage(char* buffer);
-
+	int LireMessage();
+	int EncoderImage(CCrypteur* Image);
+	int AfficherImage(CCrypteur Image);
 	int CreerBMP(char* Nom);
 
 	CCrypteur(const char* file);
 	bool valide;
 	ifstream fichier;
-	fichier_s reconst;
-	unsigned char* cData;
+	 fichier_s reconst;
+	 unsigned char* cData;
 	pixel_s* data;
 };
 
